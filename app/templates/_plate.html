@@ -1,16 +1,19 @@
 <table class="table table-hover">
     <tr>
         <td width="70px">
-            <a href="{{ url_for('user', username=post.author.username) }}">
-                <img src="{{ post.author.avatar(70) }}" />
-            </a>
+            <img src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}" />
         </td>
         <td>
-            <a href="{{ url_for('user', username=post.author.username) }}">
-                {{ post.author.username }}
-            </a>
+            User ID: {{ user.id }}
             <br>
-            {{ post.body }}
+            {{ user.first_name }} {{ user.last_name }}
+            <br>
+            Date of Birth: {{ user.dob }}
+            <br>
+            Gender: {{ user.gender }}
+            <br>
+            About me: {{ user.about_me }}
+            <br>
         </td>
     </tr>
 </table>

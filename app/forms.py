@@ -36,7 +36,7 @@ class RegistrationForm(FlaskForm):
 class DetailsForm(FlaskForm):
     picture = FileField('Add Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     phone = StringField('Phone Number', validators=[DataRequired(), Length(min=10, max=10)])
-    gender = RadioField('Gender', validators=[DataRequired()], choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')])
+    gender = RadioField('Gender', validators=[DataRequired()], choices=[('Male', 'Male'), ('Female', 'Female'), ('other', 'Other')])
     aadhar = StringField('Aadhar Number', validators=[DataRequired(), Length(min=10, max=10)])
     about_me = TextAreaField('About Me', validators=[DataRequired(), Length(min=2, max=140)])
     submit = SubmitField('Register')

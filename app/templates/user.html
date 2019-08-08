@@ -1,0 +1,31 @@
+{% extends 'bootstrap/base.html' %}
+{% block content %}
+    <h1>User ID: {{ user.id }} </h1>
+    <br>
+    <table class="table">
+        <br>
+        <tr>
+            <td width="256px"><img src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}"></td>
+            <td>
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                <p>{{ user.about_me }}</p>
+                <p>Gender: {{ user.gender }}</p>
+                <p>Email: {{ user.email }}</p>
+                <p>Date of Birth: {{ user.dob }}</p>
+                <p>Phone Number: {{ user.phone_number }}</p>
+                <p>Aadhar Card Number: {{ user.aadhar }}</p>
+            </td>
+        </tr>
+    </table>  
+{% endblock content %}
+
+{% block head %}
+    {{ super() }}
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            padding: 20px;
+        }
+    </style>
+{% endblock head %}

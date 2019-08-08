@@ -5,17 +5,19 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
 from datetime import datetime
+from PIL import Image
+import os
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     return render_template('index.html', title='Home')   
 
-
-@app.route('/explore')
 @login_required
+@app.route('/explore')
 def explore():
-    return render_template('index.html', title='Explore')
+    users = User.query.all()
+    return render_template('explore.html', title='Explore', users=users)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -49,6 +51,9 @@ def details():
         current_user.phone_number = form.phone.data
         current_user.aadhar = form.aadhar.data
         current_user.gender = form.gender.data
+        save_picture(form.picture.data)
+        current_user.image_file = form.picture.data.filename
+        current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('explore'))
@@ -69,10 +74,15 @@ def register():
         return redirect(url_for('details'))
     return render_template('register.html', title='Register', form=form)
 
-'''
-@app.route('/user/<username>')
+def save_picture(form_picture):
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', form_picture.filename)
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+@app.route('/user/<id>')
 @login_required
-def user(email):
-    user = User.query.filter_by(email=email).first_or_404()
+def user(id):
+    user = User.query.get(int(id))
     return render_template('user.html', user=user)
-'''
